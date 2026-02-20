@@ -316,18 +316,24 @@ var src_default = {
     if (url.pathname.startsWith("/favicon")) {
       return Response.json({}, { status: 404 });
     }
-    let id = url.searchParams.get("instanceId");
-    if (id) {
-      let instance2 = await env.MY_WORKFLOW.get(id);
+    if (url.pathname === "/api/launch") {
+      let instance = await env.MY_WORKFLOW.create();
       return Response.json({
-        status: await instance2.status()
+        id: instance.id,
+        details: await instance.status()
       });
     }
-    let instance = await env.MY_WORKFLOW.create();
-    return Response.json({
-      id: instance.id,
-      details: await instance.status()
-    });
+    if (url.pathname === "/api/status") {
+      let id = url.searchParams.get("instanceId");
+      if (id) {
+        let instance = await env.MY_WORKFLOW.get(id);
+        return Response.json({
+          status: await instance.status()
+        });
+      }
+      return Response.json({ error: "Missing instanceId" }, { status: 400 });
+    }
+    return new Response("Not Found", { status: 404 });
   }
 };
 
@@ -372,7 +378,7 @@ var jsonError = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx)
 }, "jsonError");
 var middleware_miniflare3_json_error_default = jsonError;
 
-// .wrangler/tmp/bundle-CQPFfZ/middleware-insertion-facade.js
+// .wrangler/tmp/bundle-DGNzJe/middleware-insertion-facade.js
 var __INTERNAL_WRANGLER_MIDDLEWARE__ = [
   middleware_ensure_req_body_drained_default,
   middleware_miniflare3_json_error_default
@@ -404,7 +410,7 @@ function __facade_invoke__(request, env, ctx, dispatch, finalMiddleware) {
 }
 __name(__facade_invoke__, "__facade_invoke__");
 
-// .wrangler/tmp/bundle-CQPFfZ/middleware-loader.entry.ts
+// .wrangler/tmp/bundle-DGNzJe/middleware-loader.entry.ts
 var __Facade_ScheduledController__ = class ___Facade_ScheduledController__ {
   constructor(scheduledTime, cron, noRetry) {
     this.scheduledTime = scheduledTime;

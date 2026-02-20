@@ -13,7 +13,7 @@ import {
  *
  * Learn more at https://developers.cloudflare.com/workflows
  */
- 
+
 // User-defined params passed to your Workflow
 type Params = {
 	email: string;
@@ -85,27 +85,31 @@ export default {
 			return Response.json({}, { status: 404 });
 		}
 
-		// Get the status of an existing instance, if provided
-		// GET /?instanceId=<id here>
-		let id = url.searchParams.get("instanceId");
-		if (id) {
-			let instance = await env.MY_WORKFLOW.get(id);
+		// API: Launch Workflow
+		if (url.pathname === "/api/launch") {
+			// Spawn a new instance and return the ID and status
+			let instance = await env.MY_WORKFLOW.create();
 			return Response.json({
-				status: await instance.status(),
+				id: instance.id,
+				details: await instance.status(),
 			});
 		}
 
-		// Spawn a new instance and return the ID and status
-		let instance = await env.MY_WORKFLOW.create();
-		// You can also set the ID to match an ID in your own system
-		// and pass an optional payload to the Workflow
-		// let instance = await env.MY_WORKFLOW.create({
-		// 	id: 'id-from-your-system',
-		// 	params: { payload: 'to send' },
-		// });
-		return Response.json({
-			id: instance.id,
-			details: await instance.status(),
-		});
+		// API: Get Status
+		// GET /api/status?instanceId=<id here>
+		if (url.pathname === "/api/status") {
+			let id = url.searchParams.get("instanceId");
+			if (id) {
+				let instance = await env.MY_WORKFLOW.get(id);
+				return Response.json({
+					status: await instance.status(),
+				});
+			}
+			return Response.json({ error: "Missing instanceId" }, { status: 400 });
+		}
+
+		// For other paths, we'll let Cloudflare Assets handle it (if configured)
+		// Or return a default message if not an asset
+		return new Response("Not Found", { status: 404 });
 	},
 };
