@@ -1,0 +1,17 @@
+name = "my-app"
+main = "src/index.ts"
+compatibility_date = "2026-02-20"
+
+[observability]
+enabled = true
+
+[[workflows]]
+name = "workflow-my-app"
+binding = "MY_WORKFLOW"
+class_name = "MyWorkflow"
+
+[assets]
+directory = "./public"
+
+[compatibility_flags]
+nodejs_compat = true
