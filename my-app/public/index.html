@@ -4,19 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Cloudflare App</title>
+    <title>Minimalist Workflow</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #6366f1;
-            --primary-hover: #4f46e5;
-            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
+            --bg: #ffffff;
+            --text: #171717;
+            --text-muted: #737373;
+            --border: #e5e5e5;
+            --accent: #000000;
+            --accent-hover: #262626;
         }
 
         * {
@@ -26,144 +25,112 @@
         }
 
         body {
-            font-family: 'Outfit', sans-serif;
-            background: var(--bg-gradient);
-            color: var(--text-main);
-            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
-            position: relative;
-        }
-
-        /* Ambient Background Elements */
-        body::before,
-        body::after {
-            content: '';
-            position: absolute;
-            width: 500px;
-            height: 500px;
-            border-radius: 50%;
-            filter: blur(80px);
-            z-index: -1;
-            opacity: 0.4;
-        }
-
-        body::before {
-            background: var(--primary);
-            top: -100px;
-            left: -100px;
-        }
-
-        body::after {
-            background: #8b5cf6;
-            bottom: -100px;
-            right: -100px;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 600px;
+            min-height: 100vh;
             padding: 2rem;
-            text-align: center;
         }
 
-        .card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 3rem 2rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            transition: transform 0.3s ease;
+        .main {
+            width: 100%;
+            max-width: 400px;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
+        header {
+            margin-bottom: 3rem;
         }
 
         h1 {
-            font-size: 3rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            background: linear-gradient(to right, #fff, #94a3b8);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 1.5rem;
+            font-weight: 500;
+            letter-spacing: -0.025em;
+            margin-bottom: 0.5rem;
         }
 
         p {
-            font-size: 1.125rem;
+            font-size: 0.875rem;
             color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: 2.5rem;
+            line-height: 1.5;
+        }
+
+        .cta {
+            margin-top: 2rem;
         }
 
         .btn {
-            background: var(--primary);
-            color: white;
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--accent);
+            color: #fff;
             border: none;
-            padding: 1rem 2.5rem;
-            font-size: 1.125rem;
-            font-weight: 600;
-            border-radius: 12px;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.3);
-            display: inline-flex;
+            transition: background-color 0.2s;
+            display: flex;
             align-items: center;
+            justify-content: center;
             gap: 0.5rem;
         }
 
         .btn:hover {
-            background: var(--primary-hover);
-            transform: scale(1.02);
-            box-shadow: 0 20px 25px -5px rgba(99, 102, 241, 0.4);
+            background-color: var(--accent-hover);
         }
 
-        .btn:active {
-            transform: scale(0.98);
-        }
-
-        .status {
-            margin-top: 2rem;
-            font-size: 0.875rem;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background: #10b981;
-            border-radius: 50%;
-            box-shadow: 0 0 12px #10b981;
+        .btn:disabled {
+            background-color: var(--text-muted);
+            cursor: not-allowed;
         }
 
         #result {
             margin-top: 1.5rem;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
             padding: 1rem;
-            border-radius: 12px;
-            background: rgba(0, 0, 0, 0.2);
-            font-family: monospace;
-            font-size: 0.875rem;
-            display: none;
-            text-align: left;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            white-space: pre-wrap;
             word-break: break-all;
+            display: none;
+        }
+
+        .footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .status {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            background-color: #10b981;
+            border-radius: 50%;
         }
 
         .loader {
-            width: 20px;
-            height: 20px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            width: 12px;
+            height: 12px;
+            border: 1.5px solid rgba(255, 255, 255, 0.3);
             border-top-color: white;
             border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+            animation: spin 0.6s linear infinite;
             display: none;
         }
 
@@ -176,23 +143,28 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="card">
-            <h1>My Workflow App</h1>
-            <p>A premium Cloudflare Workers experience. Launch your automated workflows with a single click.</p>
+    <div class="main">
+        <header>
+            <h1>Worker App</h1>
+            <p>A simple interface for your Cloudflare Workflow.</p>
+        </header>
 
+        <div class="cta">
             <button class="btn" id="launchBtn">
-                <span>Launch Workflow</span>
+                <span>Start Instance</span>
                 <div class="loader" id="loader"></div>
             </button>
-
-            <div id="result"></div>
-
-            <div class="status">
-                <span class="status-dot"></span>
-                <span>System Operational</span>
-            </div>
         </div>
+
+        <div id="result"></div>
+
+        <footer class="footer">
+            <div class="status">
+                <div class="status-dot"></div>
+                <span>Online</span>
+            </div>
+            <span style="font-size: 0.75rem; color: var(--border);">v1.0.1</span>
+        </footer>
     </div>
 
     <script>
@@ -206,7 +178,6 @@
             result.style.display = 'none';
 
             try {
-                // Call the API endpoint which triggers a workflow
                 const response = await fetch('/api/launch', { method: 'GET' });
                 const data = await response.json();
 
