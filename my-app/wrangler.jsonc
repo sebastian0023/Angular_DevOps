@@ -6,7 +6,7 @@
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "my-app",
 	"main": "src/index.ts",
-	"compatibility_date": "2026-02-19",
+	"compatibility_date": "2026-02-20",
 	"observability": {
 		"enabled": true
 	},
@@ -43,8 +43,7 @@
 	 * https://developers.cloudflare.com/workers/static-assets/binding/
 	 */
 	"assets": {
-		"directory": "./public/",
-		"binding": "ASSETS"
+		"directory": "./public"
 	}
 	/**
 	 * Service Bindings (communicate between multiple Workers)
