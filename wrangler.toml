@@ -13,5 +13,5 @@ class_name = "MyWorkflow"
 [assets]
 directory = "./public"
 
-[compatibility_flags]
-nodejs_compat = true
+compatibility_flags = [ "nodejs_compat" ]
+
